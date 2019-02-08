@@ -1,27 +1,24 @@
 const express = require('express');
 const router = express.Router();
-const passport = require('passport');
 
-router.get('/signup', (req,res) => {
+const passport = require('passport');
+const {isLoggedIn,isLoggedAlready} = require('../lib/auth');
+
+router.get('/signup', isLoggedAlready, (req,res) => {
     res.render('auth/signup');
 });
 
-router.post('/signup', passport.authenticate('local.signup', {
+router.post('/signup', isLoggedAlready, passport.authenticate('local.signup', {
         successRedirect: '/profile',
         failureRedirect: '/signup',
         failureFlash: true
 }));
 
-router.get('/signin', (req,res) => {
+router.get('/signin', isLoggedAlready, (req,res) => {
     res.render('auth/signin');
 });
 
-router.get('/profile', (req,res) => {
-
-    res.send('This is your profile');
-});
-
-router.post('/signin', (req, res, next) => {
+router.post('/signin', isLoggedAlready, (req, res, next) => {
     passport.authenticate('local.signin',{
         successRedirect: '/profile',
         failureRedirect: '/signin',
@@ -29,5 +26,13 @@ router.post('/signin', (req, res, next) => {
     })(req, res, next);
 });
 
+router.get('/profile', isLoggedIn, (req,res) => {
+    res.render('profile');
+});
+
+router.get('/logout', isLoggedIn, (req,res) => {
+    req.logout();
+    res.redirect('/signin');
+});
 
 module.exports = router;
