@@ -9,7 +9,7 @@ helpers.encryptPassword = async (password) => {
 
 helpers.matchPassword = async(password, savedPassword) => {
     try{
-        const asd = await bcrypt.compare(password,savedPassword);
+        return await bcrypt.compare(password,savedPassword);
     }catch (e){
         //TODO: mandar msj con flash
         console.log(e);
