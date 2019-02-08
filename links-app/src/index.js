@@ -5,12 +5,15 @@ const path = require('path');
 const flash = require('connect-flash');
 const sessions = require('express-session');
 const MYSQLStore = require('express-mysql-session');
+const passport = require('passport');
+
 const {database} = require('./keys');
+
 
 
 // Initializations
 const app = express();
-
+require('./lib/passport');
 
 // Settings
 app.set('port', process.env.PORT || 4000);
@@ -35,9 +38,11 @@ app.use(flash());
 app.use(morgan('dev'));// ver peticiones q llegan al sv
 app.use(express.urlencoded({extended: false})); //Aceptar desde el form los datos que envian los user. datos comunes
 app.use(express.json());
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 // Global Variables
-
 app.use((req,res,next) => {
     app.locals.success = req.flash('success');
     next();
