@@ -1,6 +1,6 @@
-CREATE DATABASE links_app;
+CREATE DATABASE linksapp;
 
-USE links_app;
+USE linksapp;
 -- USERS TABLE
 CREATE TABLE users(
     id INT(11) NOT NULL,
