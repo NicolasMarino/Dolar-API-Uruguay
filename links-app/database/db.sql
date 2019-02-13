@@ -27,3 +27,14 @@ CREATE TABLE links (
     created_at timestamp NOT NULL DEFAULT current_timestamp,
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id)
 );
+
+CREATE TABLE posts (
+    id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(150) NOT NULL,
+    url VARCHAR(255) NOT NULL,
+    description TEXT,
+    contact VARCHAR(255) NOT NULL,
+    user_id INT(11),
+    created_at timestamp NOT NULL DEFAULT current_timestamp,
+    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id)
+);

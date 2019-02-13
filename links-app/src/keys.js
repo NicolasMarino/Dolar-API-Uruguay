@@ -3,6 +3,6 @@ module.exports ={
         host: 'localhost',
         user: 'nicoroot',
         password: 'Password01',
-        database: 'links_app'
+        database: 'linksapp'
     }
 };

@@ -1,17 +1,20 @@
 <div class="container p-4">
     <div class="row">
-        <div class="col-md-4 mx-auto">
+        <div class="col-md-4 mx-left">
             <div class="card">
                 <div class="card-body">
-                    <form action="/links/add" method="POST">
+                    <form action="/posts/add" method="POST">
                         <div class="form-group">
-                            <input type="text" class="form-control" name="title" placeholder="title" autofocus>
+                            <input type="text" class="form-control" name="title" placeholder="Titulo" autofocus>
                         </div>
                         <div class="form-group">
                             <input type="url" name="url" class="form-control" placeholder="URL">
                         </div>
                         <div class="form-group">
-                            <textarea name="description" class="form-control" rows="2" placeholder="URL"></textarea>
+                            <textarea name="description" class="form-control" rows="2" placeholder="Descripción"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="contact" placeholder="contacto" autofocus>
                         </div>
                         <div class="form-group">
                             <button class="btn btn-success btn-block">SAVE</button>
@@ -21,4 +24,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> 
