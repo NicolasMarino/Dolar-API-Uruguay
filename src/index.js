@@ -28,6 +28,7 @@ app.engine('.hbs', exphbs({
 app.set('view engine', '.hbs');
 
 // Middlewares
+
 app.use(sessions({
     secret: 'niconodesession',
     resave: false,
@@ -42,6 +43,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
+
 // Global Variables
 app.use((req,res,next) => {
     app.locals.success = req.flash('success');
@@ -54,6 +56,7 @@ app.use((req,res,next) => {
 app.use(require('./routes'));
 app.use(require('./routes/authentication'));
 app.use('/links',require('./routes/links.js'));
+app.use('/posts',require('./routes/posts.js'));
 
 // Public
 app.use(express.static(path.join(__dirname, 'public'))); 

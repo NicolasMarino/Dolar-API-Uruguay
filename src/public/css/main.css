@@ -1,24 +1,59 @@
 body{
-    background: #f5f6f5;
+    background: linear-gradient(-50deg, #007C7F, #66AFBF,#88EAFF,#007C7F);
     font-family: 'Oswald', sans-serif;
-    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    background-size: 400% 400%;
+	-webkit-animation: Gradient 10s ease infinite;
+	-moz-animation: Gradient 10s ease infinite;
+	animation: Gradient 10s ease infinite;
+}
+@-webkit-keyframes Gradient {
+	0% {
+		background-position: 0% 50%
+	}
+	50% {
+		background-position: 100% 50%
+	}
+	100% {
+		background-position: 0% 50%
+	}
 }
 
+@-moz-keyframes Gradient {
+	0% {
+		background-position: 0% 50%
+	}
+	50% {
+		background-position: 100% 50%
+	}
+	100% {
+		background-position: 0% 50%
+	}
+}
+
+@keyframes Gradient {
+	0% {
+		background-position: 0% 50%
+	}
+	50% {
+		background-position: 100% 50%
+	}
+	100% {
+		background-position: 0% 50%
+	}
+}
 .index{
     width: 100vw;
     height: 100vh;
 }
-
 .masthead{
-    color: white;
-    min-height: 30rem;
     width: 100%;
-    height: 100%;
-    padding-top: 8rem;
-    background: url('/img/header-bg.jpg');
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    height: 100%;    
+}
+
+.navbar a{
+    color: black;
 }
 .masthead h1{
     font-size: 4rem;
