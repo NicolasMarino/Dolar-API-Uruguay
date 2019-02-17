@@ -28,6 +28,7 @@ app.engine('.hbs', exphbs({
 app.set('view engine', '.hbs');
 
 // Middlewares
+
 app.use(sessions({
     secret: 'niconodesession',
     resave: false,
@@ -40,6 +41,7 @@ app.use(express.urlencoded({extended: false})); //Aceptar desde el form los dato
 app.use(express.json());
 app.use(passport.initialize());
 app.use(passport.session());
+
 
 
 // Global Variables

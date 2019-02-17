@@ -36,19 +36,20 @@ router.get('/delete/:id', isLoggedIn, async (req,res) => {
 
 router.get('/edit/:id', isLoggedIn, async (req,res) => { 
     const { id } = req.params;
-    const links = await pool.query('SELECT * FROM posts WHERE ID = ?',[id]);
-    res.render('posts/edit', {link: links[0]});
+    const posts = await pool.query('SELECT * FROM posts WHERE ID = ?',[id]);
+    res.render('posts/edit', {post: posts[0]});
 });
 
 router.post('/edit/:id', isLoggedIn, async (req,res) => { 
     const { id } = req.params;
-    const { title, description, url } = req.body;
-    const newLink = {
+    const { title, description, url, contact } = req.body;
+    const editedPost = {
         title,
         description,
-        url
+        url,
+        contact
     };
-    await pool.query('UPDATE posts set ? WHERE id = ?', [newLink, id]);
+    await pool.query('UPDATE posts set ? WHERE id = ?', [editedPost, id]);
     req.flash('success', 'Post editado correctamente');
     res.redirect('/posts');
 });
