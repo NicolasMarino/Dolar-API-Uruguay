@@ -1,13 +1,41 @@
+html{
+	height: 100%;
+	margin: 0;
+}
 body{
-    background: linear-gradient(-50deg, #007C7F, #66AFBF,#88EAFF,#007C7F);
+	/* background: linear-gradient(-50deg, #007C7F, #66AFBF,#88EAFF,#007C7F); */
+	background-image: url('/img/image-bg.png');
+	background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
     font-family: 'Oswald', sans-serif;
     width: 100vw;
-    height: 100vh;
-    background-size: 400% 400%;
+    height: 100%;
+    /* background-size: 400% 400%;
 	-webkit-animation: Gradient 10s ease infinite;
 	-moz-animation: Gradient 10s ease infinite;
-	animation: Gradient 10s ease infinite;
+	animation: Gradient 10s ease infinite; */
 }
+.container::after{
+	content: "";
+}
+.container h1,h3,h5,.btn{
+	color: black;
+	position: relative;
+}
+footer{
+	width: 100%;
+	position: absolute;
+	bottom: 0;    
+	background-color: #1a1a1a;
+	height: 75px;
+	padding-bottom: 35px;
+    padding-top: 35px;
+}
+.copyright p {
+    color: #fff;
+}
+
 @-webkit-keyframes Gradient {
 	0% {
 		background-position: 0% 50%
@@ -43,26 +71,15 @@ body{
 		background-position: 0% 50%
 	}
 }
-.index{
-    width: 100vw;
-    height: 100vh;
-}
-.masthead{
-    width: 100%;
-    height: 100%;    
-}
 
 .navbar a{
-    color: black;
+    color: white;
 }
-.masthead h1{
-    font-size: 4rem;
-    margin: 0;
-    padding: 0;
+.navbar{
+	color: white;
 }
-
-@media (min-width: 992px){
-    .masthead h1{
-        font-size: 5.5rem;
+@media (max-width: 992px){
+    .copyright p{
+        font-size: 14px;
     }
 }
