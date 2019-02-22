@@ -28,6 +28,9 @@ CREATE TABLE links (
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
+ALTER TABLE links
+ADD COLUMN is_private BOOLEAN NOT NULL;
+
 CREATE TABLE posts (
     id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(150) NOT NULL,
@@ -38,3 +41,4 @@ CREATE TABLE posts (
     created_at timestamp NOT NULL DEFAULT current_timestamp,
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id)
 );
+

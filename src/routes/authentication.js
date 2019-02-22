@@ -28,7 +28,7 @@ router.post('/signin', isLoggedAlready, (req, res, next) => {
 });
 
 router.get('/profile', isLoggedIn, async(req,res) => {
-    const links = await pool.query('SELECT title, url, created_at, username FROM links, users');
+    const links = await pool.query('SELECT title, url, created_at, username, is_private FROM links, users where links.user_id = users.id and links.is_private = 0');
     res.render('profile', {links});
 });
 
