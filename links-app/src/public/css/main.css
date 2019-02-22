@@ -1,27 +1,26 @@
+
+/*#region main*/
 html{
-	height: 100%;
-	margin: 0;
+	min-height: 100%; 
+	
+	position: relative;
 }
 body{
 	/* background: linear-gradient(-50deg, #007C7F, #66AFBF,#88EAFF,#007C7F); */
 	background-image: url('/img/image-bg.png');
 	background-position: center center;
-    background-repeat: no-repeat;
+    /* background-repeat: no-repeat; */
     background-size: cover;
     font-family: 'Oswald', sans-serif;
-    width: 100vw;
-    height: 100%;
+    /* width: 100vw;
+	height: 100%; */
     /* background-size: 400% 400%;
 	-webkit-animation: Gradient 10s ease infinite;
 	-moz-animation: Gradient 10s ease infinite;
 	animation: Gradient 10s ease infinite; */
 }
-.container::after{
-	content: "";
-}
-.container h1,h3,h5,.btn{
-	color: black;
-	position: relative;
+.container{
+	margin-bottom: 75px;
 }
 footer{
 	width: 100%;
@@ -29,11 +28,11 @@ footer{
 	bottom: 0;    
 	background-color: #1a1a1a;
 	height: 75px;
-	padding-bottom: 35px;
-    padding-top: 35px;
+	padding-top: 25px;
 }
 .copyright p {
-    color: #fff;
+	color: #fff;
+	font-size: 16px;
 }
 
 @-webkit-keyframes Gradient {
@@ -72,14 +71,75 @@ footer{
 	}
 }
 
-.navbar a{
+
+/*#endregion main*/
+
+
+/*#region navbar*/
+
+.navbar-custom {
+    background-color: transparent;
+}
+
+/* change the brand and text color */
+.navbar-custom .navbar-brand,
+.navbar-custom .navbar-text {
     color: white;
 }
-.navbar{
+
+/* change the link color */
+.navbar-custom .navbar-nav .nav-link {
+    color: white;
+}
+
+/* change the color of active or hovered links */
+.navbar-custom .nav-item.active .nav-link,
+.navbar-custom .nav-item:hover .nav-link {
+    color: #ffffff;
+}
+
+/* for dropdown only - change the color of droodown */
+.navbar-custom .dropdown-menu {
+    background-color: transparent;
+}
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 0, 0, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+.navbar-toggler {
+	background: white; /* pick your color */
+	
+}
+.navbar-custom .dropdown-item {
+    color: white;
+}
+.navbar-custom .dropdown-item:hover,
+.navbar-custom .dropdown-item:focus {
+    color: #333333;
+    background-color: rgba(255,255,255,.5);
+}
+
+/*#endregion navbar*/
+
+/*#region index*/
+.index-custom{
 	color: white;
 }
+.index-btn{
+	font-size: 18px;
+	border-radius: 0px 19px 0px 19px;
+	-moz-border-radius: 0px 19px 0px 19px;
+	-webkit-border-radius: 0px 19px 0px 19px;
+	border: 1px solid white;
+}
+/*#endregion index*/
+
+/*#region media queries*/
 @media (max-width: 992px){
     .copyright p{
         font-size: 14px;
     }
 }
+/*#endregion index*/
+
+/*#region */
+/*#endregion */
