@@ -3,6 +3,7 @@ const router = express.Router();
 
 const passport = require('passport');
 const {isLoggedIn,isLoggedAlready} = require('../lib/auth');
+const pool = require('../database'); // connection to db
 
 router.get('/signup', isLoggedAlready, (req,res) => {
     res.render('auth/signup');
@@ -26,8 +27,9 @@ router.post('/signin', isLoggedAlready, (req, res, next) => {
     })(req, res, next);
 });
 
-router.get('/profile', isLoggedIn, (req,res) => {
-    res.render('profile');
+router.get('/profile', isLoggedIn, async(req,res) => {
+    const links = await pool.query('SELECT title, url, created_at, username FROM links, users');
+    res.render('profile', {links});
 });
 
 router.get('/logout', isLoggedIn, (req,res) => {

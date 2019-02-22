@@ -5,16 +5,16 @@
                 <div class="card-body">
                     <form action="/links/edit/{{link.id}}" method="POST">
                         <div class="form-group">
-                            <input type="text" value="{{link.title}}" class="form-control" name="title" placeholder="title" autofocus>
+                            <input type="text" value="{{link.title}}" class="form-control" name="title" placeholder="Título" autofocus>
                         </div>
                         <div class="form-group">
                             <input type="url" value="{{link.url}}" name="url" class="form-control" placeholder="URL">
                         </div>
                         <div class="form-group">
-                            <textarea name="description" class="form-control" rows="2" placeholder="URL">{{link.description}}</textarea>
+                            <textarea name="description" class="form-control" rows="2" placeholder="Descripción">{{link.description}}</textarea>
                         </div>
                         <div class="form-group">
-                            <button class="btn btn-success btn-block">SAVE</button>
+                            <button class="btn btn-success btn-block">Guardar</button>
                         </div>
 
                     </form> 
