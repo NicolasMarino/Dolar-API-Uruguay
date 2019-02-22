@@ -10,11 +10,18 @@ router.get('/add', isLoggedIn, (req, res) => {
 
 router.post('/add', isLoggedIn, async (req, res) => {
     const { title, url, description } = req.body;
+    var {is_private} = req.body;
+    if(is_private == "on"){
+        is_private = true;
+    }else{
+        is_private = false;
+    }
     const newLink = {
         title,
         url,
         description,
-        user_id: req.user.id 
+        user_id: req.user.id,
+        is_private
     };
     await pool.query('INSERT INTO links set ?',[newLink]);
     req.flash('success', 'Link saved succesfully');
@@ -40,13 +47,21 @@ router.get('/edit/:id', isLoggedIn, async (req,res) => {
 });
 
 router.post('/edit/:id', isLoggedIn, async (req,res) => { 
-    const { id } = req.params;
+    const { id } = req.params;    
     const { title, description, url } = req.body;
+    var {is_private} = req.body;
+    if(is_private == "on"){
+        is_private = true;
+    }else{
+        is_private = false;
+    }
     const newLink = {
         title,
         description,
-        url
+        url,
+        is_private
     };
+    console.log(newLink);
     await pool.query('UPDATE links set ? WHERE id = ?', [newLink, id]);
     req.flash('success', 'Link updated succesfully');
     res.redirect('/links');
