@@ -62,5 +62,5 @@ app.use('/posts',require('./routes/posts.js'));
 app.use(express.static(path.join(__dirname, 'public'))); 
 // Starting the sv
 app.listen(app.get('port'),() =>{
-    console.log('Server on port', app.get('port'));
+    console.log('Server on port', "http://localhost:"+app.get('port'));
 });
