@@ -1,0 +1,31 @@
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-10">
+            <h4 class="index-custom">Todos los links:</h4>
+            <div class="row">
+                {{#each links}}
+                <div class="col-md-3 mx-left mb-3">
+                    <div class="card">
+                        <div class="card-header">{{title}}</div>
+                        <div class="card-body">
+                            <a class="card-title" href="{{url}}">{{url}}</a>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">{{username}} | {{timeago created_at}}</small>
+                        </div>
+                    </div>
+                </div>
+                {{else}}
+                <div class="col-md-3 mx-auto">
+                    <div class="card card-body text-center">
+                        <p>No hay ningun link en la web.</p>
+                        <a href="/posts/add">Crea uno!</a>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+</div>
