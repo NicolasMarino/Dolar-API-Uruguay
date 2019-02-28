@@ -10,7 +10,7 @@ router.get('/signup', isLoggedAlready, (req,res) => {
 });
 
 router.post('/signup', isLoggedAlready, passport.authenticate('local.signup', {
-        successRedirect: '/profile',
+        successRedirect: '/main-profile',
         failureRedirect: '/signup',
         failureFlash: true
 }));
@@ -21,15 +21,10 @@ router.get('/signin', isLoggedAlready, (req,res) => {
 
 router.post('/signin', isLoggedAlready, (req, res, next) => {
     passport.authenticate('local.signin',{
-        successRedirect: '/profile',
+        successRedirect: '/main-profile',
         failureRedirect: '/signin',
         failureFlash: true
     })(req, res, next);
-});
-
-router.get('/profile', isLoggedIn, async(req,res) => {
-    const links = await pool.query('SELECT title, url, created_at, username, is_private FROM links, users where links.user_id = users.id and links.is_private = 0');
-    res.render('profile', {links});
 });
 
 router.get('/logout', isLoggedIn, (req,res) => {
