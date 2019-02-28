@@ -10,7 +10,7 @@ router.get('/signup', isLoggedAlready, (req,res) => {
 });
 
 router.post('/signup', isLoggedAlready, passport.authenticate('local.signup', {
-        successRedirect: '/main-profile',
+        successRedirect: '/profile',
         failureRedirect: '/signup',
         failureFlash: true
 }));
@@ -21,7 +21,7 @@ router.get('/signin', isLoggedAlready, (req,res) => {
 
 router.post('/signin', isLoggedAlready, (req, res, next) => {
     passport.authenticate('local.signin',{
-        successRedirect: '/main-profile',
+        successRedirect: '/profile',
         failureRedirect: '/signin',
         failureFlash: true
     })(req, res, next);
