@@ -6,6 +6,7 @@ const flash = require('connect-flash');
 const sessions = require('express-session');
 const MYSQLStore = require('express-mysql-session');
 const passport = require('passport');
+const compression = require('compression');
 
 const {database} = require('./keys');
 
@@ -41,6 +42,7 @@ app.use(express.urlencoded({extended: false})); //Aceptar desde el form los dato
 app.use(express.json());
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(compression());
 
 
 
