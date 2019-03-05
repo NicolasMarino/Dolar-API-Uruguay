@@ -15,8 +15,8 @@
                 {{#each links}}
                 <div class="col-md-3 mx-left mb-3">
                     <div class="card">
-                        <div class="card-header">{{title}}</div>
-                        <div class="card-body">
+                        <div class="card-header card-custom-hf">{{title}}</div>
+                        <div class="card-body card-custom-b">
                             <a class="card-title" href="{{url}}">{{url}}</a>
                             <div class="btn-center">
                                 <a href="/links/delete/{{id}}" class="btn btn-danger">Borrar</a>
@@ -24,7 +24,7 @@
                             </div>
                             
                         </div>
-                        <div class="card-footer">
+                        <div class="card-footer card-custom-hf">
                             <small class="text-muted">{{username}} | {{timeago created_at}}</small>
                         </div>
                     </div>

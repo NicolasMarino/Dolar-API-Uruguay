@@ -7,19 +7,19 @@
             <div class="row">
                 {{#each links}}
                 <div class="col-md-3 mx-left mb-3">
-                    <div class="card">
-                        <div class="card-header">{{title}}</div>
-                        <div class="card-body">
+                    <div class="card card-b">
+                        <div class="card-header card-custom-hf">{{title}}</div>
+                        <div class="card-body card-custom-b">
                             <a class="card-title" href="{{url}}">{{url}}</a>
                         </div>
-                        <div class="card-footer">
+                        <div class="card-footer card-custom-hf">
                             <small class="text-muted">{{username}} | {{timeago created_at}}</small>
                         </div>
                     </div>
                 </div>
                 {{else}}
                 <div class="col-md-3 mx-auto">
-                    <div class="card card-body text-center">
+                    <div class="card card-body text-center card-b">
                         <p>No hay ningun link en la web.</p>
                         <a href="/posts/add">Crea uno!</a>
                     </div>

@@ -6,14 +6,16 @@ html{
 	position: relative;
 }
 body{
-	background: #E1E9EA;
-	/* background-image: url('/img/image-bg.png');
-	background-position: center center;
+		/* background: #E1E9EA; */
+		background: #f9f9f9;
+		
+		/* background-image: url('/img/image-bg.png');
+		background-position: center center;
     background-repeat: no-repeat; */
     background-size: cover;
     font-family: 'Oswald', sans-serif;
     width: 100vw;
-	height: 100%;
+		height: 100%;
     /* background-size: 400% 400%; */
 	-webkit-animation: Gradient 10s ease infinite;
 	-moz-animation: Gradient 10s ease infinite;
@@ -24,6 +26,17 @@ body{
 }
 .card{
 	transition: max-height 500ms cubic-bezier(.39,.575,.565,1),opacity 200ms cubic-bezier(.39,.575,.565,1);
+	border: 0;
+	border-radius: 1px;
+}
+.card-b{
+	background-color: #eeebdc;
+}
+.card-custom-hf{
+	background-color: #dfdccd;
+}
+.card-custom-b{
+	background-color: #eeebdc;
 }
 footer{
 	width: 100%;
@@ -95,7 +108,7 @@ footer{
 
 .navbar-custom .nav-item.active .nav-link,
 .navbar-custom .nav-item:hover .nav-link {
-    color: white;
+    color: black;
 }
 
 .navbar-custom .dropdown-menu {

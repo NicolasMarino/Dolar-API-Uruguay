@@ -14,10 +14,11 @@ pool.getConnection((err, connection) => {
         }
         if(err.code === 'ECONNREFUSED'){
             console.error('DATABASE CONNECTION WAS REFUSED');
+            console.error('abri el xampp');
         }
     }
     if(connection) connection.release();
-    console.log('DB is connected')
+    //console.log('DB is connected')
     return;
 });
 
