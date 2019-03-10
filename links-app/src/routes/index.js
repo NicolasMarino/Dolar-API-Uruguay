@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const xlstojson = require("xls-to-json");
 
 router.get('/', (req, res) => {
     const http = require('http');
@@ -14,16 +13,20 @@ router.get('/', (req, res) => {
 });
 
 router.get('/apiarchivo', (req,res) => {
-  xlstojson({
-    input: "./cotizaciones.xls", 
-    output: "cotizaciones.json",
-    sheet: "cotizaciones al público"
-  }, function(err, result) {
-    if(err) {
-      res.json(err);
-    } else {
-      res.json(result);
-    }
+  
+  const XLSX = require('xlsx');
+  var workbook = XLSX.readFile('./cotizaciones.xls');
+  //console.log(workbook);
+  XLSX.writeFile(workbook, 'cotizaciones2.xlsx');
+  var workbook2 = XLSX.readFile('cotizaciones2.xlsx');
+  var sheet_name_list = workbook2.SheetNames;
+  //console.log(sheet_name_list);
+  var output = XLSX.utils.sheet_to_json(workbook2.Sheets[sheet_name_list], {raw: true, defval:null});
+  console.log(output);
+  var fs = require("fs");
+  let path = "output.json";
+  fs.writeFile(path,JSON.stringify(output, undefined, 2), (err) => {
+      if (err) throw err;
   });
 });
 

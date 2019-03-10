@@ -5,4 +5,3 @@ setTimeout(function() {
 setTimeout(function() {
     $('#justMessage').fadeOut('slow');
 }, 1000);
-
