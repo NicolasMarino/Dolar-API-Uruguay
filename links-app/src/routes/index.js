@@ -17,7 +17,7 @@ router.get('/apiarchivo', (req,res) => {
   xlstojson({
     input: "./cotizaciones.xls", 
     output: "cotizaciones.json",
-    lowerCaseHeaders:true
+    sheet: "cotizaciones al público"
   }, function(err, result) {
     if(err) {
       res.json(err);
