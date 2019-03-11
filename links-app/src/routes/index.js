@@ -28,6 +28,7 @@ router.get('/apiarchivo', (req,res) => {
   fs.writeFile(path,JSON.stringify(output, undefined, 2), (err) => {
       if (err) throw err;
   });
+  res.send(output);
 });
 
 module.exports = router;
