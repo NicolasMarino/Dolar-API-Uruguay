@@ -30,31 +30,37 @@ router.get('/api/archivo', (req,res) => {
   for(z in worksheet) {
      if(z[0] === '!') continue;
      //parse out the column, row, and value
-     var col = z.substring(0,2);
-     var row = parseInt(z.substring(4,5));
+     var col = z.substring(1,5);
+     //var row = parseInt(z.substring(4,5));.
+     //console.log(z);
      value = worksheet[z].v;
-     console.log(value);
+     //console.log("valor: "+value);
      value = "+"+value+"+";
      //store header names
-     if(row == 1) {
-         headers[col] = value;
-         continue;
-     }
-     if(!data[row]) data[row]={};
-     data[row][headers[col]] = value;
+    //  if(row == 1) {
+    //      headers[col] = value;
+    //      continue;
+    //  }
+    //  if(!data[row]) data[row]={};
+    //  data[row][headers[col]] = value;
      datos.push(value);
   }
   //drop those first two rows which are empty
   data.shift();
   data.shift();
   //console.log(data);
-  let path = "data.txt";
+  let path = "data.json";
   
-  fs.writeFile(path,datos, (err) => {
+  fs.writeFile(path,JSON.stringify(datos,null,4), (err) => {
       if (err) throw err;
   });
   //console.log(headers);
+  var compra = worksheet['D4266'].v;
+  var venta = worksheet['E4266'].v;
+  console.log("compra: "+compra);
+  console.log("venta: "+venta);
   });
+ 
   //console.log(sheet_name_list);  
   /************************************************* */
   /************************************************* */
