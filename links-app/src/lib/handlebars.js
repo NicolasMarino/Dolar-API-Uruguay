@@ -27,7 +27,7 @@ helpers.timeago = (timestamp) => {
     return format(timestamp, 'es');
 };
 helpers.toJSON =(object) => {
-    return JSON.stringify(object, null, 4);
+    return JSON.stringify(object, '', 4);
 }
 
 
