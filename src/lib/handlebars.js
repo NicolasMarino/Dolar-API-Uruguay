@@ -26,6 +26,9 @@ const helpers = {};
 helpers.timeago = (timestamp) => {
     return format(timestamp, 'es');
 };
+helpers.toJSON =(object) => {
+    return JSON.stringify(object, '', 4);
+}
 
 
 module.exports = helpers;
