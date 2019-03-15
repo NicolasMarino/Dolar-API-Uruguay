@@ -27,38 +27,62 @@ router.get('/api/archivo', (req,res) => {
   var data = [];
   var value;
   var datos = [];
+  var datosNuevos = [];
+  var auxRow = 1;
   for(z in worksheet) {
      if(z[0] === '!') continue;
      //parse out the column, row, and value
-     var col = z.substring(1,5);
-     //var row = parseInt(z.substring(4,5));.
-     //console.log(z);
-     value = worksheet[z].v;
+     var col = z.substring(0,1);
+     var row = parseInt(z.substring(1));
+     
+     if(worksheet['A'+row]){
+      value = worksheet[z].v;
      //console.log("valor: "+value);
-     value = "+"+value+"+";
+      value = worksheet[col+row].v;
+     }
+     
+     //console.log(worksheet['A'+row].v);
+     //console.log("auxRow"+auxRow);
+
+     if(row == auxRow){
+       //console.log(value);
+       if(worksheet['A'+row]){
+        datosNuevos[row] += ","+value.toString();
+       }
+     }
+     if(worksheet['A'+row]){
+      datosNuevos[row] = worksheet['A'+row].v.toString()+","+datosNuevos[row];
+     }
      //store header names
+     //console.log("esto es una columna"+col);
+     //console.log("esto es una columna"+row);
+    //  console.log("esto es una fila+row"+col+row);
+    //  console.log();
     //  if(row == 1) {
-    //      headers[col] = value;
-    //      continue;
-    //  }
+    //     console.log(row);
+    //     headers[col] = value;
+    //     console.log(headers);
+    //     continue;
+    // }
     //  if(!data[row]) data[row]={};
-    //  data[row][headers[col]] = value;
-     datos.push(value);
+    auxRow=row;
+    datos.push(value);
   }
-  //drop those first two rows which are empty
-  data.shift();
-  data.shift();
-  //console.log(data);
-  let path = "data.json";
   
+  //drop those first two rows which are empty
+  datosNuevos.shift();
+  datosNuevos.shift();
+  console.log(datosNuevos);
+  let path = "dataTest.json";
+  let pathra = "dataTest2.json";
+
   fs.writeFile(path,JSON.stringify(datos,null,4), (err) => {
       if (err) throw err;
   });
-  //console.log(headers);
-  var compra = worksheet['D4266'].v;
-  var venta = worksheet['E4266'].v;
-  console.log("compra: "+compra);
-  console.log("venta: "+venta);
+  fs.writeFile(pathra,JSON.stringify(datosNuevos,null,4), (err) => {
+    if (err) throw err;
+});
+  
   });
  
   //console.log(sheet_name_list);  
