@@ -17,35 +17,30 @@ router.get('/api/archivo', (req,res) => {
   
   const XLSX = require('xlsx');
   var workbook = XLSX.readFile('./cotizaciones.xls');
-  //console.log(workbook);
   XLSX.writeFile(workbook, 'cotizaciones2.xlsx');
   var workbook2 = XLSX.readFile('cotizaciones2.xlsx',{sheetStubs: true});
   var sheet_name_list = workbook2.SheetNames;
+
+  var datosNuevos = [];
+  var datosNuevos2 = [];
+  var auxRow = 1;
+  let jsonData = {};
+
+
   sheet_name_list.forEach(function(y) {
   var worksheet = workbook.Sheets[y];
-  var headers = {};
-  var data = [];
   var value;
-  var datos = [];
-  var datosNuevos = [];
-  var auxRow = 1;
   for(z in worksheet) {
      if(z[0] === '!') continue;
-     //parse out the column, row, and value
+
      var col = z.substring(0,1);
      var row = parseInt(z.substring(1));
      
      if(worksheet['A'+row]){
       value = worksheet[z].v;
-     //console.log("valor: "+value);
       value = worksheet[col+row].v;
      }
-     
-     //console.log(worksheet['A'+row].v);
-     //console.log("auxRow"+auxRow);
-
      if(row == auxRow){
-       //console.log(value);
        if(worksheet['A'+row]){
         datosNuevos[row] += ","+value.toString();
        }
@@ -53,85 +48,53 @@ router.get('/api/archivo', (req,res) => {
      if(worksheet['A'+row]){
       datosNuevos[row] = worksheet['A'+row].v.toString()+","+datosNuevos[row];
      }
-     //store header names
-     //console.log("esto es una columna"+col);
-     //console.log("esto es una columna"+row);
-    //  console.log("esto es una fila+row"+col+row);
-    //  console.log();
-    //  if(row == 1) {
-    //     console.log(row);
-    //     headers[col] = value;
-    //     console.log(headers);
-    //     continue;
-    // }
-    //  if(!data[row]) data[row]={};
     auxRow=row;
-    datos.push(value);
   }
-  
-  //drop those first two rows which are empty
   datosNuevos.shift();
   datosNuevos.shift();
-  console.log(datosNuevos);
-  let path = "dataTest.json";
-  let pathra = "dataTest2.json";
-
-  fs.writeFile(path,JSON.stringify(datos,null,4), (err) => {
-      if (err) throw err;
-  });
-  fs.writeFile(pathra,JSON.stringify(datosNuevos,null,4), (err) => {
-    if (err) throw err;
-});
-  
-  });
+  //console.log(datosNuevos);
  
-  //console.log(sheet_name_list);  
-  /************************************************* */
-  /************************************************* */
-  /************************************************* */
+  let pathra = "dataTest.json";
 
-  // sheet_name_list.forEach(function (y) { /* iterate through sheets */
-  //   //var exceljsonObj = [];
-  //   var rowObject  =  XLSX.utils.sheet_to_row_object_array(workbook2.Sheets[y]);
-  //   exceljsonObj = rowObject;
-  //       for(var i=0;i<exceljsonObj.length;i++){
-  //       //var recordcount = exceljsonObj.length;
-  //       var data = exceljsonObj[i];
-  //       // $('#myTable tbody:last-child').append("<tr><td>"+data.ID+"</td><td>"+data.Name+"</td><td>"+data.Months+"</td></tr>");
-  //       // }
-  //       console.log(data);
-  //   //alert(exceljsonObj.length);
-       
-  //   };
-  // });
-  /************************************************* */
-  /************************************************* */
-  /************************************************* */
-  //console.log(sheet_name_list);
-   var output = XLSX.utils.sheet_to_json(workbook2.Sheets[sheet_name_list], {header: 1,range: 0,raw: true, defval: '',blankRows: false});
-  // //var output = XLSX.utils.sheet_to_json(workbook2.Sheets[sheet_name_list], {blankRows: false, defval: ''});
+  fs.writeFile(pathra,JSON.stringify(datosNuevos,null,2), (err) => {
+    if (err) throw err;
+  });
   
-  // console.log(output);
-  // let path = "output.json";
-  
-  // fs.writeFile(path,JSON.stringify(output,'',4), (err) => {
-  //     if (err) throw err;
-  // });
-  // //const archivo = JSON.stringify(output, undefined, 2);
 
+  });
+  var datos;
   
-  //console.log(archivo);
-  //res.send(JSON.stringify(output, undefined, 4));
+  fs.readFile('./dataTest.json','utf8', function read(err, data) {
+    if (err) throw err;
+    datos =JSON.parse(data);
+    for(var i = 1; i < datos.length;i++){
+
+      if(datos[i] !== null){
+        var linea = datos[i].replace('undefined','');
+        linea = linea.split(',');
+        var contadorRepetidos=0;
+        for(var x = 0; x < linea.length;x++){
+          if(linea[0] == linea[x+1]){
+            contadorRepetidos++;
+          }          
+        }
+        linea.splice(0,contadorRepetidos,'');
+        //datosNuevos2.push(linea);
+        //datosNuevos2.push(JSON.parse(JSON.stringify(linea,null,2)));
+      };
+    };
+    //console.log(datosNuevos2);
+    
+  });
+  //console.log(jsonData);
+  var output = JSON.stringify(datosNuevos2,null,2);
+
   res.render('index', {archivo: output});
 });
 router.get('/api/listado', (req,res) => {
   const XLSX = require('xlsx');
   var workbook2 = XLSX.readFile('cotizaciones2.xlsx');
   var sheet_name_list = workbook2.SheetNames;
-  //console.log(sheet_name_list);  
-  /************************************************* */
-  /************************************************* */
-  /************************************************* */
 
   sheet_name_list.forEach(function (y) { /* iterate through sheets */
     //var exceljsonObj = [];
@@ -154,18 +117,6 @@ router.get('/api/listado', (req,res) => {
   var range = XLSX.utils.decode_range(sheet['!ref']);
   console.log(range.s.r);
   console.log(range.e.r);
-
-  for(var R = range.s.r; R <= range.e.r; ++R) {
-    for(var C = range.s.c; C <= range.e.c; ++C) {
-      console.log('Row : ' + R);
-      console.log('Column : ' + C);
-      var cellref = XLSX.utils.encode_cell({c:C, r:R}); // construct A1 reference for cell
-      console.log(cellref);
-      if(!sheet[cellref]) continue; // if cell doesn't exist, move on
-      var cell = sheet[cellref];
-      console.log(cell.v);
-    }
-  }
 
 
   // /* Get worksheet */
