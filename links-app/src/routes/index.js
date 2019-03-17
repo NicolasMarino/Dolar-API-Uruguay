@@ -24,7 +24,7 @@ router.get('/api/archivo', (req,res) => {
   var datosNuevos = [];
   var datosNuevos2 = [];
   var auxRow = 1;
-  let jsonData = {};
+  var jsonData = [];
 
 
   sheet_name_list.forEach(function(y) {
@@ -53,10 +53,27 @@ router.get('/api/archivo', (req,res) => {
   datosNuevos.shift();
   datosNuevos.shift();
   //console.log(datosNuevos);
- 
+  //jsonData =JSON.parse(datosNuevos);
+  for(var i = 1; i < datosNuevos.length;i++){
+
+    if(datosNuevos[i] !== undefined){
+      var linea = datosNuevos[i].replace('undefined','');
+      linea = linea.split(',');
+      var contadorRepetidos=0;
+      for(var x = 0; x < linea.length;x++){
+        if(linea[0] == linea[x+1]){
+          contadorRepetidos++;
+        }          
+      }
+      linea.splice(0,contadorRepetidos,'');
+      console.log(linea);
+      datosNuevos2.push(linea);
+      //datosNuevos2.push(JSON.parse(JSON.stringify(linea,null,2)));
+    };
+  };
   let pathra = "dataTest.json";
 
-  fs.writeFile(pathra,JSON.stringify(datosNuevos,null,2), (err) => {
+  fs.writeFile(pathra,JSON.stringify(datosNuevos2,null,2), (err) => {
     if (err) throw err;
   });
   
@@ -64,28 +81,28 @@ router.get('/api/archivo', (req,res) => {
   });
   var datos;
   
-  fs.readFile('./dataTest.json','utf8', function read(err, data) {
-    if (err) throw err;
-    datos =JSON.parse(data);
-    for(var i = 1; i < datos.length;i++){
+  // fs.readFile('./dataTest.json','utf8', function read(err, data) {
+  //   if (err) throw err;
+  //   datos =JSON.parse(data);
+  //   for(var i = 1; i < datos.length;i++){
 
-      if(datos[i] !== null){
-        var linea = datos[i].replace('undefined','');
-        linea = linea.split(',');
-        var contadorRepetidos=0;
-        for(var x = 0; x < linea.length;x++){
-          if(linea[0] == linea[x+1]){
-            contadorRepetidos++;
-          }          
-        }
-        linea.splice(0,contadorRepetidos,'');
-        //datosNuevos2.push(linea);
-        //datosNuevos2.push(JSON.parse(JSON.stringify(linea,null,2)));
-      };
-    };
-    //console.log(datosNuevos2);
+  //     if(datos[i] !== null){
+  //       var linea = datos[i].replace('undefined','');
+  //       linea = linea.split(',');
+  //       var contadorRepetidos=0;
+  //       for(var x = 0; x < linea.length;x++){
+  //         if(linea[0] == linea[x+1]){
+  //           contadorRepetidos++;
+  //         }          
+  //       }
+  //       linea.splice(0,contadorRepetidos,'');
+  //       //datosNuevos2.push(linea);
+  //       //datosNuevos2.push(JSON.parse(JSON.stringify(linea,null,2)));
+  //     };
+  //   };
+  //   //console.log(datosNuevos2);
     
-  });
+  // });
   //console.log(jsonData);
   var output = JSON.stringify(datosNuevos2,null,2);
 
