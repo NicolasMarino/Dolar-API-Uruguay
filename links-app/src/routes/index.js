@@ -67,8 +67,8 @@ router.get('/api/archivo', (req,res) => {
       }
       linea.splice(0,contadorRepetidos,'');
       console.log(linea);
-      datosNuevos2.push(linea);
-      //datosNuevos2.push(JSON.parse(JSON.stringify(linea,null,2)));
+      //datosNuevos2.push(linea);
+      datosNuevos2.push(JSON.parse(JSON.stringify(linea,null,2)));
     };
   };
   let pathra = "dataTest.json";
