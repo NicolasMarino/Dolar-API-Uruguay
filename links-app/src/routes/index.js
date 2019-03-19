@@ -60,7 +60,7 @@ router.get('/api/archivo', (req,res) => {
       var linea = datosNuevos[i].replace('undefined','');
       linea = linea.split(',');
       var contadorRepetidos=0;
-      jsonData.push(linea);
+      
 
       for(var x = 0; x < linea.length;x++){
         if(linea[0] == linea[x+1]){
@@ -68,20 +68,31 @@ router.get('/api/archivo', (req,res) => {
         }          
       }
       linea.splice(0,contadorRepetidos,'');
+      var meses = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
+      var exchangeRates = new Object();
+      exchangeRates.day= linea[1];
+      if(linea[3] != undefined){
+        if(meses.includes(linea[3])){
+          exchangeRates.month = linea[3];
+          exchangeRates.buyDollar= linea[4];
+          exchangeRates.sellDollar= linea[5];
+        }else{
+          exchangeRates.buyDollar= linea[3];
+          exchangeRates.sellDollar= linea[4];
+        }
+      }
+      
+     
+      exchangeRatesJson = JSON.stringify(exchangeRates,null,2);
+      jsonData.push(exchangeRatesJson);
+      
       datosNuevos2.push(JSON.parse(JSON.stringify(linea,null,2)));
     };
   };
   
-  // for(var opa =0;opa<jsonData.length;opa++){
-  //   var asd = jsonData[opa];
-  //   asd = asd.split(",");
-  // }
-  console.log(linea);
-  var exchangeRates = new Object();
-  exchangeRates.day= linea[1];
-  exchangeRates.buyDollar= linea[4];
-  exchangeRates.sellDollar= linea[5];
-  exchangeRatesJson = JSON.stringify(exchangeRates,null,2);
+  for(var opa =0;opa<jsonData.length;opa++){
+    console.log(JSON.parse(jsonData[opa]));
+  }
 
   let pathra = "dataTest.json";
 
@@ -94,7 +105,7 @@ router.get('/api/archivo', (req,res) => {
   var datos;
   var output = JSON.stringify(datosNuevos2,null,2);
 
-  res.render('index', {archivo: exchangeRatesJson});
+  res.render('index', {archivo: jsonData});
 });
 
 
