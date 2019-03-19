@@ -26,6 +26,7 @@ router.get('/api/archivo', (req,res) => {
   var auxRow = 1;
   var jsonData = [];
 
+  var exchangeRatesJson;
 
   sheet_name_list.forEach(function(y) {
   var worksheet = workbook.Sheets[y];
@@ -52,25 +53,36 @@ router.get('/api/archivo', (req,res) => {
   }
   datosNuevos.shift();
   datosNuevos.shift();
-  //console.log(datosNuevos);
-  //jsonData =JSON.parse(datosNuevos);
-  for(var i = 1; i < datosNuevos.length;i++){
+  
+  for(var i = 1; i < datosNuevos.length-1;i++){
 
     if(datosNuevos[i] !== undefined){
       var linea = datosNuevos[i].replace('undefined','');
       linea = linea.split(',');
       var contadorRepetidos=0;
+      jsonData.push(linea);
+
       for(var x = 0; x < linea.length;x++){
         if(linea[0] == linea[x+1]){
           contadorRepetidos++;
         }          
       }
       linea.splice(0,contadorRepetidos,'');
-      console.log(linea);
-      //datosNuevos2.push(linea);
       datosNuevos2.push(JSON.parse(JSON.stringify(linea,null,2)));
     };
   };
+  
+  // for(var opa =0;opa<jsonData.length;opa++){
+  //   var asd = jsonData[opa];
+  //   asd = asd.split(",");
+  // }
+  console.log(linea);
+  var exchangeRates = new Object();
+  exchangeRates.day= linea[1];
+  exchangeRates.buyDollar= linea[4];
+  exchangeRates.sellDollar= linea[5];
+  exchangeRatesJson = JSON.stringify(exchangeRates,null,2);
+
   let pathra = "dataTest.json";
 
   fs.writeFile(pathra,JSON.stringify(datosNuevos2,null,2), (err) => {
@@ -80,96 +92,10 @@ router.get('/api/archivo', (req,res) => {
 
   });
   var datos;
-  
-  // fs.readFile('./dataTest.json','utf8', function read(err, data) {
-  //   if (err) throw err;
-  //   datos =JSON.parse(data);
-  //   for(var i = 1; i < datos.length;i++){
-
-  //     if(datos[i] !== null){
-  //       var linea = datos[i].replace('undefined','');
-  //       linea = linea.split(',');
-  //       var contadorRepetidos=0;
-  //       for(var x = 0; x < linea.length;x++){
-  //         if(linea[0] == linea[x+1]){
-  //           contadorRepetidos++;
-  //         }          
-  //       }
-  //       linea.splice(0,contadorRepetidos,'');
-  //       //datosNuevos2.push(linea);
-  //       //datosNuevos2.push(JSON.parse(JSON.stringify(linea,null,2)));
-  //     };
-  //   };
-  //   //console.log(datosNuevos2);
-    
-  // });
-  //console.log(jsonData);
   var output = JSON.stringify(datosNuevos2,null,2);
 
-  res.render('index', {archivo: output});
+  res.render('index', {archivo: exchangeRatesJson});
 });
-router.get('/api/listado', (req,res) => {
-  const XLSX = require('xlsx');
-  var workbook2 = XLSX.readFile('cotizaciones2.xlsx');
-  var sheet_name_list = workbook2.SheetNames;
 
-  sheet_name_list.forEach(function (y) { /* iterate through sheets */
-    //var exceljsonObj = [];
-    var rowObject  =  XLSX.utils.sheet_to_row_object_array(workbook2.Sheets[y]);
-    exceljsonObj = rowObject;
-        for(var i=0;i<exceljsonObj.length;i++){
-        //var recordcount = exceljsonObj.length;
-        var data = exceljsonObj[i];
-        // $('#myTable tbody:last-child').append("<tr><td>"+data.ID+"</td><td>"+data.Name+"</td><td>"+data.Months+"</td></tr>");
-        // }
-        //console.log(data);
-    //alert(exceljsonObj.length);
-       
-    };
-  });
-
-  //var first_sheet_name = workbook2.SheetNames[0];
-  
-  var sheet = workbook2.Sheets[workbook2.SheetNames[0]];
-  var range = XLSX.utils.decode_range(sheet['!ref']);
-  console.log(range.s.r);
-  console.log(range.e.r);
-
-
-  // /* Get worksheet */
-  // var worksheet = workbook2.Sheets[first_sheet_name];
-
-  // /* Find desired cell */
-  // var desired_cell = worksheet[address_of_cell];
-
-  // /* Get the value */
-  // var desired_value = (desired_cell ? desired_cell.v : undefined);
-  // console.log(desired_value);
-  //   var datos;
-  //  /// var stream = fs.createReadStream('./output.json');
-  //   //stream.setEncoding('utf8');
-  //   var datos = JSON.parse("./output.json")
-    
-  //   console.log(datos);
-    
-
-  //   res.send(datos);
-});
-router.get('/api/archivo/test', (req,res) => {
-  function to_json(workbook) {
-    var result = {};
-    workbook.SheetNames.forEach(function(sheetName) {
-      var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-      if(roa.length > 0){
-        result[sheetName] = roa;
-      }
-    });
-    return result;
-  };
-  const XLSX = require('xlsx');
-  var workbook2 = XLSX.readFile('cotizaciones2.xlsx');
-  var jsonDataa = to_json(workbook2);
-  console.log(jsonDataa);
-});
 
 module.exports = router;
