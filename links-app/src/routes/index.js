@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const fs = require("fs");
+const XLSX = require('xlsx');
 
 router.get('/', (req, res) => {
     const http = require('http');
@@ -14,8 +15,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/api/archivo', (req,res) => {
-  
-  const XLSX = require('xlsx');
+    
   var workbook = XLSX.readFile('./cotizaciones.xls');
   XLSX.writeFile(workbook, 'cotizaciones2.xlsx');
   var workbook2 = XLSX.readFile('cotizaciones2.xlsx',{sheetStubs: true});
@@ -69,20 +69,35 @@ router.get('/api/archivo', (req,res) => {
       }
       linea.splice(0,contadorRepetidos,'');
       var meses = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
+      var yearsFixThis = ["1999","2000","2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2011","2012","2013","2014","2015","2016","2017","2018","2019"];
       var exchangeRates = new Object();
-      exchangeRates.day= linea[1];
-      if(linea[3] != undefined){
-        if(meses.includes(linea[3])){
+      var lastMonth;
+      
+      var lastYear;
+      if(linea[4] != undefined){
+        if(yearsFixThis.includes(linea[4])){
+          exchangeRates.years = linea[4];
+          lastYear = linea[4];
+        }else{
+          exchangeRates.years = lastYear;
+        }
+      } 
+      if(linea[3] != undefined){  
+            
+        if(meses.includes(linea[3])){          
+          linea.splice(3,0);
           exchangeRates.month = linea[3];
+          exchangeRates.day= linea[1];  
           exchangeRates.buyDollar= linea[4];
           exchangeRates.sellDollar= linea[5];
+          lastMonth= linea[3];
         }else{
+          exchangeRates.month = lastMonth;
+          exchangeRates.day= linea[1];  
           exchangeRates.buyDollar= linea[3];
           exchangeRates.sellDollar= linea[4];
         }
-      }
-      
-     
+      }      
       exchangeRatesJson = JSON.stringify(exchangeRates,null,2);
       jsonData.push(exchangeRatesJson);
       
@@ -90,20 +105,22 @@ router.get('/api/archivo', (req,res) => {
     };
   };
   
-  for(var opa =0;opa<jsonData.length;opa++){
-    console.log(JSON.parse(jsonData[opa]));
-  }
+  // for(var opa =0;opa<jsonData.length;opa++){
+  //   console.log(JSON.parse(jsonData[opa]));
+  // }
 
-  let pathra = "dataTest.json";
+  // let pathra = "dataTest.json";
 
-  fs.writeFile(pathra,JSON.stringify(datosNuevos2,null,2), (err) => {
-    if (err) throw err;
+  // fs.writeFile(pathra,JSON.stringify(datosNuevos2,null,2), (err) => {
+  //   if (err) throw err;
+  // });
+  // let path = "dataTest2.json";
+
+  // fs.writeFile(path,jsonData, (err) => {
+  //   if (err) throw err;
+  // });
+
   });
-  
-
-  });
-  var datos;
-  var output = JSON.stringify(datosNuevos2,null,2);
 
   res.render('index', {archivo: jsonData});
 });
