@@ -11,7 +11,6 @@ const compression = require('compression');
 const {database} = require('./keys');
 
 
-
 // Initializations
 const app = express();
 require('./lib/passport');
@@ -66,4 +65,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Starting the sv
 app.listen(app.get('port'),() =>{
     console.log('Server on port', "http://localhost:"+app.get('port'));
+});
+
+var schedule = require('node-schedule');
+var apiExchangeRates = require('./lib/apiExchangeRates');
+
+var rule = new schedule.RecurrenceRule();
+rule.hour = 10;
+
+var j = schedule.scheduleJob(rule, function(){
+    apiExchangeRates.getArchivo();
 });

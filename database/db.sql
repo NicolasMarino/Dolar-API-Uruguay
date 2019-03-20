@@ -42,3 +42,10 @@ CREATE TABLE posts (
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
+CREATE TABLE datos_api(
+    id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    datos MEDIUMTEXT
+);
+
+ALTER TABLE datos_api
+ADD updated_at timestamp NOT NULL DEFAULT current_timestamp
