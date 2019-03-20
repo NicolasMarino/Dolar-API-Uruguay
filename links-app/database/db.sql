@@ -42,3 +42,7 @@ CREATE TABLE posts (
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
+CREATE TABLE datos_api(
+    id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    datos MEDIUMTEXT
+);
