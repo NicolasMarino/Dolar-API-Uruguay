@@ -1,20 +1,20 @@
-const api = {};
 
 const fs = require("fs");
 const XLSX = require('xlsx');
-const pool = require('../database');
+const pool = require('./database.js');
 const http = require('http');
+const moment = require('moment-timezone');
 
-api.getArchivo = async() =>{
-
-  const file = fs.createWriteStream("cotizaciones.xls");
+getArchivo = async() =>{
+  const file = fs.createWriteStream("../cotizaciones.xls");
   const request = http.get("http://www.ine.gub.uy/c/document_library/get_file?uuid=1dcbe20a-153b-4caf-84a7-7a030d109471", function(response) {
     response.pipe(file);
   });
 
-  var workbook = XLSX.readFile('./cotizaciones.xls');
-  XLSX.writeFile(workbook, 'cotizaciones2.xlsx');
-  var workbook2 = XLSX.readFile('cotizaciones2.xlsx',{sheetStubs: true});
+  var workbook = XLSX.readFile('../cotizaciones.xls');
+
+  XLSX.writeFile(workbook, '../cotizaciones2.xlsx');
+  var workbook2 = XLSX.readFile('../cotizaciones2.xlsx',{sheetStubs: true});
   var sheet_name_list = workbook2.SheetNames;
 
   var datosNuevos = [];
@@ -118,16 +118,23 @@ api.getArchivo = async() =>{
         
         exchangeRatesJson = JSON.stringify(exchangeRates);//Parseo el json
         jsonData.push(exchangeRatesJson);// Lo guardo en un array para luego mostrarlo en el frontend
-        
+        console.log(jsonData);
         //datosNuevos2.push(JSON.parse(JSON.stringify(linea,null,2))); //Lo guardo en un archivo, persistencia? o en la bd? TODO
       };
     };  
   });
-  const newData = {
+  jsonData.forEach(element => {
+      console.log(element);
+  });
+  var updated_at = new Date();
+  
+  var newData = {
       datos:jsonData
   };
+  //var id = await pool.query('select * from datos_api');
+  //id = id[0].id;
 
-  await pool.query('UPDATE datos_api set ? WHERE id=1',[newData]);
+  await pool.query("UPDATE datos_api set ? where id = '1'",[newData]);
 };
 
-module.exports = api;
+getArchivo();

@@ -17,10 +17,9 @@ router.get('/', (req, res) => {
 const api = require('../lib/apiExchangeRates');
 
 router.get('/api/archivo', async(req,res) => {
-  //api.getArchivo();
   jsonData = await pool.query('SELECT * FROM datos_api');
   jsonData[0].datos = JSON.parse(jsonData[0].datos);
-  res.render('index', {archivo: jsonData[0].datos});
+  res.render('index', {archivo: jsonData[0]});
 });
 
 

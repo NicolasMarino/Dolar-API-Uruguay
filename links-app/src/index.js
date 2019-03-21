@@ -67,12 +67,17 @@ app.listen(app.get('port'),() =>{
     console.log('Server on port', "http://localhost:"+app.get('port'));
 });
 
-var schedule = require('node-schedule');
 var apiExchangeRates = require('./lib/apiExchangeRates');
 
-var rule = new schedule.RecurrenceRule();
-rule.hour = 10;
 
-var j = schedule.scheduleJob(rule, function(){
-    apiExchangeRates.getArchivo();
-});
+import { CronJob } from 'cron';
+
+const doSomething = new CronJob(
+    '0 0 10 * *', 
+    apiExchangeRates.getArchivo(),
+    null,
+    false, 
+    'America/Montevideo',
+);
+  
+doSomething.start()  
