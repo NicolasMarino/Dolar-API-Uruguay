@@ -23,6 +23,7 @@ router.post('/add', isLoggedIn, async (req, res) => {
         user_id: req.user.id,
         is_private
     };
+    console.log(newLink);
     await pool.query('INSERT INTO links set ?',[newLink]);
     req.flash('success', 'Link saved succesfully');
     res.redirect('/profile');

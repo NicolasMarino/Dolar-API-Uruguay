@@ -127,7 +127,7 @@ api.getArchivo = async() =>{
       datos:jsonData
   };
 
-  await pool.query('UPDATE datos_api set ? WHERE id=1',[newData]);
+  //await pool.query('UPDATE datos_api set ? WHERE id=1',[newData]);
 };
 
 module.exports = api;

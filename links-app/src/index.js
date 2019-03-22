@@ -70,7 +70,7 @@ app.listen(app.get('port'),() =>{
 var apiExchangeRates = require('./lib/apiExchangeRates');
 
 
-import { CronJob } from 'cron';
+var CronJob = require('cron').CronJob;
 
 const doSomething = new CronJob(
     '0 0 10 * *', 
