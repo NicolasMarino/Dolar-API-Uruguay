@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/index.js",
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "postinstall": "opencollective-postinstall"
+  },
+  "collective": {
+    "url": "https://opencollective.com/webpack"
   },
   "keywords": [],
   "author": "",
