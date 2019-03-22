@@ -47,5 +47,8 @@ CREATE TABLE datos_api(
     datos MEDIUMTEXT
 );
 
-ALTER TABLE datos_api
-ADD updated_at timestamp NOT NULL DEFAULT current_timestamp
+--OLD/ No funciona con update.
+--ALTER TABLE datos_api
+--ADD updated_at timestamp NOT NULL DEFAULT current_timestamp
+-- funciona con update
+ALTER TABLE datos_api CHANGE updated_at updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;

@@ -16,8 +16,15 @@ router.get('/', (req, res) => {
 });
 
 router.get('/api/archivo', async(req,res) => {
+  
+    jsonData = await pool.query('SELECT * FROM datos_api');
+    jsonData[0].datos = JSON.parse(jsonData[0].datos);
 
-    var workbook = XLSX.readFile('./cotizaciones.xls');
+    res.render('index', {archivo: jsonData[0]});
+});
+
+router.get('/api/get/archivo', async(req,res)=>{
+  var workbook = XLSX.readFile('./cotizaciones.xls');
     
     XLSX.writeFile(workbook, 'cotizaciones2.xlsx');
     var workbook2 = XLSX.readFile('cotizaciones2.xlsx',{sheetStubs: true});
@@ -137,9 +144,7 @@ router.get('/api/archivo', async(req,res) => {
     };
     
     await pool.query('UPDATE datos_api set ? WHERE id=1',[newData]);
-    
-  res.render('index', {archivo: jsonData});
+    res.render('api/get-file');
 });
-
 
 module.exports = router;

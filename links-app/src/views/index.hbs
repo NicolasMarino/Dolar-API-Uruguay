@@ -11,7 +11,12 @@
     <a href="/signin" class="btn index-custom index-btn">
         Empezar
     </a>
-    <p>{{{archivo}}}</p>
+    <p>{{{toJSON archivo.datos}}}</p>
+
+    <p>TODO: Parsear utc to localtime, restar 3h </p>
     
-    <p>Actualizado: {{archivo}}</p>
+    <p>Actualizado: {{archivo.updated_at}}</p>
+    
+    <p>Actualizado: {{timeago archivo.updated_at}}</p>
+    
 </div>
