@@ -70,30 +70,32 @@ app.listen(app.get('port'),() =>{
 var apiExchangeRates = require('./lib/apiExchangeRates');
 
 
-var cron = require('node-cron');
+var CronJob = require('cron').CronJob;
 
-cron.schedule('0 0 10 * *', () => {
+
+
+var job1 = new CronJob('0 0 10 * *', () => {
     apiExchangeRates.getArchivo();
   }, {
     scheduled: true,
     timezone: "America/Montevideo"
 });
 
-cron.schedule('0 5 10 * *', () => {
+var job2 = new CronJob('0 5 10 * *', () => {
     apiExchangeRates.getData();
   }, {
     scheduled: true,
     timezone: "America/Montevideo"
 });
 //TO UTC
-cron.schedule('0 0 7 * *', () => {
+var job3 = new CronJob('0 0 7 * *', () => {
     apiExchangeRates.getArchivo();
   }, {
     scheduled: true,
     timezone: "America/Montevideo"
 });
 
-cron.schedule('0 5 7 * *', () => {
+var job4 = new CronJob('0 5 7 * *', () => {
     apiExchangeRates.getData();
   }, {
     scheduled: true,
