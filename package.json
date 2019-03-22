@@ -9,7 +9,11 @@
     "postinstall": "opencollective-postinstall"
   },
   "collective": {
-    "url": "https://opencollective.com/webpack"
+    "type": "opencollective",
+    "url": "https://opencollective.com/node-cron",
+    "mocha": "^5.2.0",
+    "nyc": "^13.0.1",
+    "sinon": "^6.2.0"
   },
   "keywords": [],
   "author": "",
