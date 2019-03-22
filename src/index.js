@@ -67,12 +67,35 @@ app.listen(app.get('port'),() =>{
     console.log('Server on port', "http://localhost:"+app.get('port'));
 });
 
-var schedule = require('node-schedule');
 var apiExchangeRates = require('./lib/apiExchangeRates');
 
-var rule = new schedule.RecurrenceRule();
-rule.hour = 10;
 
-var j = schedule.scheduleJob(rule, function(){
+var cron = require('node-cron');
+
+cron.schedule('0 0 10 * *', () => {
     apiExchangeRates.getArchivo();
+  }, {
+    scheduled: true,
+    timezone: "America/Montevideo"
+});
+
+cron.schedule('0 5 10 * *', () => {
+    apiExchangeRates.getData();
+  }, {
+    scheduled: true,
+    timezone: "America/Montevideo"
+});
+//TO UTC
+cron.schedule('0 0 7 * *', () => {
+    apiExchangeRates.getArchivo();
+  }, {
+    scheduled: true,
+    timezone: "America/Montevideo"
+});
+
+cron.schedule('0 5 7 * *', () => {
+    apiExchangeRates.getData();
+  }, {
+    scheduled: true,
+    timezone: "America/Montevideo"
 });
