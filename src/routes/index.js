@@ -24,14 +24,14 @@ router.get('/api/archivo', async(req,res) => {
 });
 
 router.get('/api/get/archivo', async(req,res)=>{
-  var workbook = XLSX.readFile('./cotizaciones.xls');
+
+    var workbook = XLSX.readFile('./cotizaciones.xls');
     
     XLSX.writeFile(workbook, 'cotizaciones2.xlsx');
     var workbook2 = XLSX.readFile('cotizaciones2.xlsx',{sheetStubs: true});
     var sheet_name_list = workbook2.SheetNames;
   
     var datosNuevos = [];
-    var datosNuevos2 = [];
     var auxRow = 1;
     var jsonData = [];
   
