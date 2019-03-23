@@ -55,6 +55,7 @@ api.getData = async() =>{
       datosNuevos.shift();
       var years=[];
       var fecha = new Date();
+      //Obtengo array de años, hasta el actual.
       for(var a = 1999; a<=fecha.getFullYear();a++){
         years.push(a);
       }
