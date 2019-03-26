@@ -1,3 +1,8 @@
 #Git ignore..
 
 links-app/src/keys.js
+noname/src/keys.js
+links-app/dataTest2.json
+links-app/dataTest.json
+links-app/cotizaciones2.xlsx
+links-app/cotizaciones.xls
