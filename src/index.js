@@ -70,36 +70,36 @@ app.listen(app.get('port'),() =>{
 var apiExchangeRates = require('./lib/apiExchangeRates');
 
 
-var CronJob = require('cron').CronJob;
+// var CronJob = require('cron').CronJob;
 
 
-var job1 = new CronJob('0 0 10 * *', () => {
-    apiExchangeRates.getArchivo();
-  }, {
-    scheduled: true,
-    timezone: "America/Montevideo"
-});
-job1.start();
-var job2 = new CronJob('0 5 10 * *', () => {
-    apiExchangeRates.getData();
-  }, {
-    scheduled: true,
-    timezone: "America/Montevideo"
-});
-job2.start();
-//TO UTC
-var job3 = new CronJob('0 0 7 * *', () => {
-    apiExchangeRates.getArchivo();
-  }, {
-    scheduled: true,
-    timezone: "America/Montevideo"
-});
-job3.start();
+// var job1 = new CronJob('0 0 10 * *', () => {
+//     apiExchangeRates.getArchivo();
+//   }, {
+//     scheduled: true,
+//     timezone: "America/Montevideo"
+// });
+// job1.start();
+// var job2 = new CronJob('0 5 10 * *', () => {
+//     apiExchangeRates.getData();
+//   }, {
+//     scheduled: true,
+//     timezone: "America/Montevideo"
+// });
+// job2.start();
+// //TO UTC
+// var job3 = new CronJob('0 0 7 * *', () => {
+//     apiExchangeRates.getArchivo();
+//   }, {
+//     scheduled: true,
+//     timezone: "America/Montevideo"
+// });
+// job3.start();
 
-var job4 = new CronJob('0 5 7 * *', () => {
-    apiExchangeRates.getData();
-  }, {
-    scheduled: true,
-    timezone: "America/Montevideo"
-});
-job4.start();
+// var job4 = new CronJob('0 5 7 * *', () => {
+//     apiExchangeRates.getData();
+//   }, {
+//     scheduled: true,
+//     timezone: "America/Montevideo"
+// });
+// job4.start();

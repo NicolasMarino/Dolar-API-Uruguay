@@ -15,12 +15,22 @@ router.get('/', (req, res) => {
     res.render('index');
 });
 
-router.get('/api/archivo', async(req,res) => {
-  
-    jsonData = await pool.query('SELECT * FROM datos_api');
-    jsonData[0].datos = JSON.parse(jsonData[0].datos);
+router.get('/api/today', async(req,res) => {
+    var jsonDatas = await pool.query('SELECT * FROM datos_api ORDER BY ID DESC LIMIT 1;'); //useless el order by pero puede servir para algun momento
+    jsonDatas[0].datos = JSON.parse(jsonDatas[0].datos);
+    var linea = jsonDatas[0].datos;
+    var nuevaLinea;
+    for(var i=0;i<linea.length;i++){
+      nuevaLinea = linea[i];
+    }
+    nuevaLinea = JSON.parse(nuevaLinea);
+    res.render('index', {archivo: nuevaLinea});
+});
 
-    res.render('index', {archivo: jsonData[0]});
+router.get('/api/archivo', async(req,res) => {  
+  jsonData = await pool.query('SELECT * FROM datos_api');
+  jsonData[0].datos = JSON.parse(jsonData[0].datos);
+  res.render('index', {archivo: jsonData[0]});
 });
 
 router.get('/api/get/archivo', async(req,res)=>{
