@@ -33,13 +33,7 @@ router.get('/api/:day/:month/:year', async(req,res) => {
   var day = req.params.day;
   var meses = ["","Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
   month = meses[month];
-  console.log(year);
-  console.log(month);
-  console.log(day);
-  // for(var x=0; x< meses.length;x++){
-    
-  // }
-  //get todas las cotizaciones
+
   var jsonDatas = await pool.query('SELECT * FROM datos_api ORDER BY ID DESC LIMIT 1;'); //useless el order by pero puede servir para algun momento
   jsonDatas[0].datos = JSON.parse(jsonDatas[0].datos);
   var linea = jsonDatas[0].datos;
@@ -53,11 +47,10 @@ router.get('/api/:day/:month/:year', async(req,res) => {
   for(var k=0;k<nuevosDatos.length-1;k++){
     var nuevaLineak = nuevosDatos[k];
     var lineaParseada = JSON.parse(nuevaLineak);
-    if(lineaParseada.years == year && lineaParseada.day == day && lineaParseada.month == month){
+    if(lineaParseada.years == year && lineaParseada.day == day && lineaParseada.month == month){//si es todo igual agarro esa fecha
       nuevaLinea = nuevaLineak;
      }
   }
-  console.log(ultimaLinea);
   if(ultimaLinea == nuevaLinea){
     nuevaLinea = JSON.parse("{}");    
   }else{
@@ -65,6 +58,40 @@ router.get('/api/:day/:month/:year', async(req,res) => {
   }
   
   res.render('index', {archivo: nuevaLinea});
+});
+
+router.get('/api/date/:day/:month/:year', async(req,res) => {
+  var year = req.params.year;
+  var month = req.params.month;
+  var day = req.params.day;
+  var meses = ["","Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
+  month = meses[month];
+
+  var jsonDatas = await pool.query('SELECT * FROM datos_api ORDER BY ID DESC LIMIT 1;'); //useless el order by pero puede servir para algun momento
+  jsonDatas[0].datos = JSON.parse(jsonDatas[0].datos);
+  var linea = jsonDatas[0].datos;
+  var nuevaLinea;
+  var nuevosDatos = [];
+  for(var i=0;i<linea.length-1;i++){
+    nuevaLinea = linea[i];
+    nuevosDatos[i] = (nuevaLinea);// Me guardo cada linea en un array para luego parsearlo y poder trabajar con el json
+  }
+  var ultimaLinea= nuevaLinea;
+  for(var k=0;k<nuevosDatos.length-1;k++){
+    var nuevaLineak = nuevosDatos[k];
+    
+    var lineaParseada = JSON.parse(nuevaLineak);
+    if(lineaParseada.year == year && lineaParseada.day == day && lineaParseada.month == month){//si es todo igual agarro esa fecha
+      nuevaLinea = nuevaLineak;
+     }
+  }
+  if(ultimaLinea == nuevaLinea){
+    nuevaLinea = JSON.parse("{}");    
+  }else{
+    nuevaLinea = JSON.parse(nuevaLinea);
+  }
+  
+  res.send(nuevaLinea);
 });
 
 router.get('/api/archivo', async(req,res) => {  
@@ -160,7 +187,7 @@ router.get('/api/get/archivo', async(req,res)=>{
               exchangeRates.year = linea[4];
               lastYear = linea[4];
             }else{
-              exchangeRates.years = lastYear;
+              exchangeRates.year = lastYear;
             }
           } 
           if(linea[3] != undefined && hasMonthAndYear){  //Agregar mes, dia, (compra,venta)Dólar
