@@ -15,12 +15,62 @@ router.get('/', (req, res) => {
     res.render('index');
 });
 
-router.get('/api/archivo', async(req,res) => {
-  
-    jsonData = await pool.query('SELECT * FROM datos_api');
-    jsonData[0].datos = JSON.parse(jsonData[0].datos);
+router.get('/api/today', async(req,res) => {
+    var jsonDatas = await pool.query('SELECT * FROM datos_api ORDER BY ID DESC LIMIT 1;'); //useless el order by pero puede servir para algun momento
+    jsonDatas[0].datos = JSON.parse(jsonDatas[0].datos);
+    var linea = jsonDatas[0].datos;
+    var nuevaLinea;
+    for(var i=0;i<linea.length;i++){
+      nuevaLinea = linea[i];
+    }
+    nuevaLinea = JSON.parse(nuevaLinea);
+    res.render('index', {archivo: nuevaLinea});
+});
 
-    res.render('index', {archivo: jsonData[0]});
+router.get('/api/:day/:month/:year', async(req,res) => {
+  var year = req.params.year;
+  var month = req.params.month;
+  var day = req.params.day;
+  var meses = ["","Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
+  month = meses[month];
+  console.log(year);
+  console.log(month);
+  console.log(day);
+  // for(var x=0; x< meses.length;x++){
+    
+  // }
+  //get todas las cotizaciones
+  var jsonDatas = await pool.query('SELECT * FROM datos_api ORDER BY ID DESC LIMIT 1;'); //useless el order by pero puede servir para algun momento
+  jsonDatas[0].datos = JSON.parse(jsonDatas[0].datos);
+  var linea = jsonDatas[0].datos;
+  var nuevaLinea;
+  var nuevosDatos = [];
+  for(var i=0;i<linea.length-1;i++){
+    nuevaLinea = linea[i];
+    nuevosDatos[i] = (nuevaLinea);// Me guardo cada linea en un array para luego parsearlo y poder trabajar con el json
+  }
+  var ultimaLinea= nuevaLinea;
+  for(var k=0;k<nuevosDatos.length-1;k++){
+    var nuevaLineak = nuevosDatos[k];
+    var lineaParseada = JSON.parse(nuevaLineak);
+    if(lineaParseada.years == year && lineaParseada.day == day && lineaParseada.month == month){
+      nuevaLinea = nuevaLineak;
+     }
+  }
+  console.log(ultimaLinea);
+  if(ultimaLinea == nuevaLinea){
+    nuevaLinea = JSON.parse("{}");    
+  }else{
+    nuevaLinea = JSON.parse(nuevaLinea);
+  }
+  
+  res.render('index', {archivo: nuevaLinea});
+});
+
+router.get('/api/archivo', async(req,res) => {  
+  jsonData = await pool.query('SELECT * FROM datos_api');
+  jsonData[0].datos = JSON.parse(jsonData[0].datos);
+  res.render('index', {archivo: jsonData[0]});
 });
 
 router.get('/api/get/archivo', async(req,res)=>{
