@@ -79,12 +79,12 @@ router.get('/api/date/:day/:month/:year', async(req,res) => {
   var ultimaLinea= nuevaLinea;
   for(var k=0;k<nuevosDatos.length-1;k++){
     var nuevaLineak = nuevosDatos[k];
-    
     var lineaParseada = JSON.parse(nuevaLineak);
     if(lineaParseada.year == year && lineaParseada.day == day && lineaParseada.month == month){//si es todo igual agarro esa fecha
       nuevaLinea = nuevaLineak;
      }
   }
+  
   if(ultimaLinea == nuevaLinea){
     nuevaLinea = JSON.parse("{}");    
   }else{
@@ -99,7 +99,7 @@ router.get('/api/archivo', async(req,res) => {
   jsonData[0].datos = JSON.parse(jsonData[0].datos);
   res.render('index', {archivo: jsonData[0]});
 });
-
+//TODO: FIX API/GET/ARCHIVO
 router.get('/api/get/archivo', async(req,res)=>{
 
     var workbook = XLSX.readFile('./cotizaciones.xls');
@@ -209,13 +209,10 @@ router.get('/api/get/archivo', async(req,res)=>{
           
           exchangeRatesJson = JSON.stringify(exchangeRates);//Parseo el json
           jsonData.push(exchangeRatesJson);// Lo guardo en un array para luego mostrarlo en el frontend
-          //console.log(jsonData);
-          //datosNuevos2.push(JSON.parse(JSON.stringify(linea,null,2))); //Lo guardo en un archivo, persistencia? o en la bd? TODO
         };
       };  
     });
-    //jsonData = JSON.stringify(jsonData);
-    //console.log(jsonData);
+    
     const newData = {
         datos:JSON.stringify(jsonData)
     };
