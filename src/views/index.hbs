@@ -12,21 +12,5 @@
         Empezar
     </a>
     <hr>
-    {{#if archivo.datos}}
-        <p>TODO: Parsear utc to localtime, restar 3h </p>
-        
-        <p>Actualizado: {{archivo.updated_at}}</p>
-        
-        <p>Actualizado: {{timeago archivo.updated_at}}</p>
-        <p>{{{toJSON archivo.datos}}}</p>
-    {{/if}}
 
-    {{#if archivo.buyDollar}}
-        <p>Día: {{{ archivo.day}}} Mes: {{{ archivo.month}}} año: {{{ archivo.year}}} </p>
-        <p>Compra: {{{ toJSON archivo.sellDollar}}}</p>
-        <p>Venta: {{{toJSON archivo.buyDollar}}}</p>        
-    {{else}}
-        <p>No hay datos para esa fecha</p>
-    {{/if}}
-    <hr>
 </div>
