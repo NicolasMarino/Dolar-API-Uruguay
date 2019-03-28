@@ -27,10 +27,11 @@ router.get('/api/today', async(req,res) => {
     res.render('index', {archivo: nuevaLinea});
 });
 
-router.get('/api/:day/:month/:year', async(req,res) => {
-  var year = req.params.year;
-  var month = req.params.month;
-  var day = req.params.day;
+router.get('/api', async(req,res) => {
+  var year = req.query.year;
+  var month = req.query.month;
+  var day = req.query.day;
+
   var meses = ["","Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
   month = meses[month];
 
@@ -47,16 +48,19 @@ router.get('/api/:day/:month/:year', async(req,res) => {
   for(var k=0;k<nuevosDatos.length-1;k++){
     var nuevaLineak = nuevosDatos[k];
     var lineaParseada = JSON.parse(nuevaLineak);
-    if(lineaParseada.years == year && lineaParseada.day == day && lineaParseada.month == month){//si es todo igual agarro esa fecha
+    //console.log(lineaParseada);
+    if(lineaParseada.year == year && lineaParseada.day == day && lineaParseada.month == month){//si es todo igual agarro esa fecha
+      console.log(nuevaLinea);
       nuevaLinea = nuevaLineak;
      }
   }
+ 
   if(ultimaLinea == nuevaLinea){
     nuevaLinea = JSON.parse("{}");    
   }else{
     nuevaLinea = JSON.parse(nuevaLinea);
   }
-  
+  console.log(nuevaLinea);
   res.render('index', {archivo: nuevaLinea});
 });
 

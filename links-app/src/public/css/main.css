@@ -31,6 +31,7 @@ body{
 }
 .card-b{
 	background-color: #eeebdc;
+	border-radius: 5px;
 }
 .card-custom-hf{
 	background-color: #dfdccd;
