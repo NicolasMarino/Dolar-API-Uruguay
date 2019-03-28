@@ -61,7 +61,7 @@ router.get('/api', async(req,res) => {
     nuevaLinea = JSON.parse(nuevaLinea);
   }
   console.log(nuevaLinea);
-  res.render('index', {archivo: nuevaLinea});
+  res.render('api/getExchangeRates', {archivo: nuevaLinea});
 });
 
 router.get('/api/date/:day/:month/:year', async(req,res) => {
