@@ -1,11 +1,11 @@
 <div class="container text-center w-100">
    
     <h1 class="mb-5 index-custom">
-        <em>Guarda tus links favoritos</em>
+        <em>Bienvenido</em>
     </h1>
     <h5 class="mb-5 index-custom">
         <em>Página en construcción.</em>
-        <em>Ultimo update. 26/3</em>
+        <em>Ultimo update. 28/3</em>
     </h5>
     {{!-- class="btn btn-primary" --}}
     <a href="/signin" class="btn index-custom index-btn">
@@ -13,19 +13,20 @@
     </a>
     <hr>
     {{#if archivo.datos}}
-    <p>TODO: Parsear utc to localtime, restar 3h </p>
-    
-    <p>Actualizado: {{archivo.updated_at}}</p>
-    
-    <p>Actualizado: {{timeago archivo.updated_at}}</p>
-    <p>{{{toJSON archivo.datos}}}</p>
+        <p>TODO: Parsear utc to localtime, restar 3h </p>
+        
+        <p>Actualizado: {{archivo.updated_at}}</p>
+        
+        <p>Actualizado: {{timeago archivo.updated_at}}</p>
+        <p>{{{toJSON archivo.datos}}}</p>
     {{/if}}
 
     {{#if archivo.buyDollar}}
-    <p>Compra: {{{ toJSON archivo.sellDollar}}}</p>
-    <p>Venta: {{{toJSON archivo.buyDollar}}}</p>
-    
+        <p>Día: {{{ archivo.day}}} Mes: {{{ archivo.month}}} año: {{{ archivo.year}}} </p>
+        <p>Compra: {{{ toJSON archivo.sellDollar}}}</p>
+        <p>Venta: {{{toJSON archivo.buyDollar}}}</p>        
     {{else}}
-    <p>No hay datos para esa fecha</p>
+        <p>No hay datos para esa fecha</p>
     {{/if}}
+    <hr>
 </div>
