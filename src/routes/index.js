@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/api/today', async(req,res) => {
-    var jsonDatas = await pool.query('SELECT * FROM datos_api ORDER BY ID DESC LIMIT 1;'); //useless el order by pero puede servir para algun momento
+    var jsonDatas = await pool.query('SELECT * FROM datos_api ORDER BY ID DESC LIMIT 1'); //useless el order by pero puede servir para algun momento
     jsonDatas[0].datos = JSON.parse(jsonDatas[0].datos);
     var linea = jsonDatas[0].datos;
     var nuevaLinea;
@@ -24,7 +24,7 @@ router.get('/api/today', async(req,res) => {
       nuevaLinea = linea[i];
     }
     nuevaLinea = JSON.parse(nuevaLinea);
-    res.render('index', {archivo: nuevaLinea});
+    res.render('api/getExchangeRates', {archivo: nuevaLinea});
 });
 
 router.get('/api', async(req,res) => {
