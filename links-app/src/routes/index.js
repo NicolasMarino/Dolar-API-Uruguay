@@ -3,10 +3,9 @@ const router = express.Router();
 const fs = require("fs");
 const XLSX = require('xlsx');
 const pool = require('../database'); // connection to db
+const http = require('http');
 
 router.get('/', (req, res) => {
-    const http = require('http');
-    const fs = require('fs');
 
     const file = fs.createWriteStream("cotizaciones.xls");
     const request = http.get("http://www.ine.gub.uy/c/document_library/get_file?uuid=1dcbe20a-153b-4caf-84a7-7a030d109471", function(response) {
@@ -104,7 +103,14 @@ router.get('/api/archivo', async(req,res) => {
   res.render('index', {archivo: jsonData[0]});
 });
 //TODO: FIX API/GET/ARCHIVO
-router.get('/api/get/archivo', async(req,res)=>{
+
+
+router.get('/api/get/archivo', async(req,res)=>{  
+ 
+    // const file =  fs.createWriteStream("cotizaciones.xls");
+    await http.get("http://www.ine.gub.uy/c/document_library/get_file?uuid=1dcbe20a-153b-4caf-84a7-7a030d109471")// function(response) {
+    //   response.pipe(file);
+    // 
 
     var workbook = XLSX.readFile('./cotizaciones.xls');
     
@@ -220,7 +226,7 @@ router.get('/api/get/archivo', async(req,res)=>{
     const newData = {
         datos:JSON.stringify(jsonData)
     };
-    
+    console.log(newData);
     await pool.query('UPDATE datos_api set ? WHERE id=1',[newData]);
     res.render('api/get-file');
 });
