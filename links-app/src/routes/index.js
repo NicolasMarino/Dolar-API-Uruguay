@@ -102,22 +102,14 @@ router.get('/api/archivo', async(req,res) => {
   jsonData[0].datos = JSON.parse(jsonData[0].datos);
   res.render('index', {archivo: jsonData[0]});
 });
+
 //TODO: FIX API/GET/ARCHIVO
-
-
 router.get('/api/get/archivo', async(req,res)=>{  
- 
-    // const file =  fs.createWriteStream("cotizaciones.xls");
-    await http.get("http://www.ine.gub.uy/c/document_library/get_file?uuid=1dcbe20a-153b-4caf-84a7-7a030d109471")// function(response) {
-    //   response.pipe(file);
-    // 
-
-    var workbook = XLSX.readFile('./cotizaciones.xls');
-    
+  
+    var workbook =  XLSX.readFile('./cotizaciones.xls'); 
     XLSX.writeFile(workbook, 'cotizaciones2.xlsx');
     var workbook2 = XLSX.readFile('cotizaciones2.xlsx',{sheetStubs: true});
     var sheet_name_list = workbook2.SheetNames;
-  
     var datosNuevos = [];
     var auxRow = 1;
     var jsonData = [];
