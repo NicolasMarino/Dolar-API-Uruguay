@@ -100,7 +100,7 @@ router.get('/api/date/:day/:month/:year', async(req,res) => {
 router.get('/api/archivo', async(req,res) => {  
   jsonData = await pool.query('SELECT * FROM datos_api');
   jsonData[0].datos = JSON.parse(jsonData[0].datos);
-  res.render('index', {archivo: jsonData[0]});
+  res.render('api/getExchangeRates', {archivo: jsonData[0]});
 });
 
 //TODO: FIX API/GET/ARCHIVO
