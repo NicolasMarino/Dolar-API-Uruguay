@@ -1,0 +1,24 @@
+<div class="container p-4">
+    <div class="row">
+        {{#each links}}
+        <div class="col-md-3">
+           <div class="card"> 
+                <div class="card-header card-custom-hf">{{title}}</div>    
+                <div class="card-body card-custom-b">
+                        <a class="card-title" href="{{url}}">{{url}}</a>                                   
+                </div>                
+                <div class="card-footer card-custom-hf">
+                    <small class="text-muted">{{username}} | {{timeago created_at}}</small>
+                </div>
+            </div>
+        </div>
+        {{else}}
+            <div class="col-md-4 mx-auto">
+                <div class="card card-body text-center">
+                    <p>No tenes ningún link aún.</p>
+                    <a href="/links/add">Crear uno!</a>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</div>
