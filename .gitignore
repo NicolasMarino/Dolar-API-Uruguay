@@ -1,10 +1,10 @@
 #Git ignore..
 
-links-app/src/keys.js
+do-things/src/keys.js
 noname/src/keys.js
-links-app/dataTest2.json
-links-app/dataTest.json
-links-app/cotizaciones2.xlsx
-links-app/cotizaciones.xls
-links-app/node_modules
+do-things/dataTest2.json
+do-things/dataTest.json
+do-things/cotizaciones2.xlsx
+do-things/cotizaciones.xls
+do-things/node_modules
 noname/node_modules
