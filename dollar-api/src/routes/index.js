@@ -26,6 +26,18 @@ router.get('/api/today', async(req,res) => {
     res.render('api/getExchangeRates', {archivo: nuevaLinea});
 });
 
+router.get('/api/today/json', async(req,res) => {
+  var jsonDatas = await pool.query('SELECT * FROM datos_api ORDER BY ID DESC LIMIT 1'); //useless el order by pero puede servir para algun momento
+  jsonDatas[0].datos = JSON.parse(jsonDatas[0].datos);
+  var linea = jsonDatas[0].datos;
+  var nuevaLinea;
+  for(var i=0;i<linea.length;i++){
+    nuevaLinea = linea[i];
+  }
+  nuevaLinea = JSON.parse(nuevaLinea);
+  res.send(nuevaLinea);
+});
+
 router.get('/api', async(req,res) => {
   var year = req.query.year;
   var month = req.query.month;
@@ -102,6 +114,13 @@ router.get('/api/archivo', async(req,res) => {
   jsonData[0].datos = JSON.parse(jsonData[0].datos);
   res.render('api/getExchangeRates', {archivo: jsonData[0]});
 });
+
+router.get('/api/archivo', async(req,res) => {  
+  jsonData = await pool.query('SELECT * FROM datos_api');
+  jsonData[0].datos = JSON.parse(jsonData[0].datos);
+  res.send(jsonData[0]);
+});
+
 
 //TODO: FIX API/GET/ARCHIVO
 router.get('/api/get/archivo', async(req,res)=>{  
