@@ -6,3 +6,4 @@ dollar-api/cotizaciones2.xlsx
 dollar-api/cotizaciones.xls
 dollar-api/node_modules
 node_modules
+package-lock.json
