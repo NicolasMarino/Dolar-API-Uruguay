@@ -3,7 +3,6 @@ const router = express.Router();
 
 const passport = require('passport');
 const {isLoggedIn,isLoggedAlready} = require('../lib/auth');
-const pool = require('../database'); // connection to db
 
 router.get('/signup', isLoggedAlready, (req,res) => {
     res.render('auth/signup');
